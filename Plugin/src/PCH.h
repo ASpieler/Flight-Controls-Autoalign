@@ -97,10 +97,6 @@
 #include <vector>
 #include <version>
 
-// Clib
-#include "RE/Starfield.h"
-#include "SFSE/SFSE.h"
-
 // winnt
 #include <ShlObj_core.h>
 
@@ -108,9 +104,9 @@
 #undef max
 
 using namespace std::literals;
-using namespace REL::literals;
 
 #define DLLEXPORT extern "C" [[maybe_unused]] __declspec(dllexport)
+#define SFSEAPI __cdecl
 
 // Plugin
 #include "Plugin.h"
@@ -118,25 +114,3 @@ using namespace REL::literals;
 // DKUtil
 #include "DKUtil/Hook.hpp"
 #include "DKUtil/Logger.hpp"
-
-// SFSEPlugin_Version
-DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept {
-	SFSE::PluginVersionData data{};
-
-	data.PluginVersion(Plugin::Version);
-	data.PluginName(Plugin::NAME);
-	data.AuthorName(Plugin::AUTHOR);
-
-	// REL::ID usage instead of REL::Offset
-	//data.UsesAddressLibrary(true);
-	// Version independent signature scanning
-	//data.UsesSigScanning(true);
-
-	// Uses version specific structure definitions
-	//data.IsLayoutDependent(true);
-	//data.HasNoStructUse(true);
-
-	data.CompatibleVersions({ SFSE::RUNTIME_LATEST });
-
-	return data;
-}();
